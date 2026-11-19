@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <link rel="stylesheet" href="leaflet.css" />
+    <script src="leaflet.js"></script>
+    <style>
+        html, body, #map { height: 100%; width: 100%; margin: 0; padding: 0; background: #e0f2fe; }
+        .pin-hospital { background: #dc2626; border: 2.5px solid white; border-radius: 50%; color: white; display: flex; align-items: center; justify-content: center; font-size: 13px; box-shadow: 0 3px 8px rgba(0,0,0,0.35); width: 28px; height: 28px; line-height: 28px; text-align: center; }
+        .pin-clinic { background: #0284c7; border: 2.5px solid white; border-radius: 50%; color: white; display: flex; align-items: center; justify-content: center; font-size: 13px; box-shadow: 0 3px 8px rgba(0,0,0,0.35); width: 28px; height: 28px; line-height: 28px; text-align: center; }
+        .pin-user { background: #059669; border: 3px solid white; border-radius: 50%; color: white; display: flex; align-items: center; justify-content: center; font-size: 14px; box-shadow: 0 3px 8px rgba(0,0,0,0.4); width: 32px; height: 32px; line-height: 32px; text-align: center; }
+        .leaflet-popup-content-wrapper { border-radius: 12px; font-family: sans-serif; font-size: 12px; }
+    </style>
+</head>
+<body>
+    <div id="map"></div>
+    <script>
+        var map = L.map('map', { zoomControl: true, attributionControl: false }).setView([2.9372, 101.6784], 13);
+
+        L.tileLayer('https://basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png', {
+            maxZoom: 19,
+            subdomains: 'abcd'
+        }).addTo(map);
+
+        var userIcon = L.divIcon({
+            className: 'pin-user',
+            html: '📍',
+            iconSize: [32, 32],
+            iconAnchor: [16, 16]
+        });
+        L.marker([2.9372, 101.6784], { icon: userIcon }).addTo(map).bindPopup("<b>Lokasi Anda (Putrajaya)</b>").openPopup();
+
+        // Sample KKM Facilities
+        var facilities = [
+            { name: "Klinik Kesihatan Putrajaya Presint 9", lat: 2.9372, lng: 101.6784, type: "clinic", q: "A-1042" },
+            { name: "Hospital Putrajaya", lat: 2.9288, lng: 101.6738, type: "hospital", q: "H-2015" },
+            { name: "Klinik Kesihatan Putrajaya Presint 18", lat: 2.9150, lng: 101.6880, type: "clinic", q: "P-1011" },
+            { name: "Hospital Serdang", lat: 2.9760, lng: 101.7208, type: "hospital", q: "S-3044" },
+            { name: "Hospital Cyberjaya", lat: 2.9189, lng: 101.6433, type: "hospital", q: "C-1092" }
+        ];
+
+        facilities.forEach(function(f) {
+            var icon = L.divIcon({
+                className: f.type === 'hospital' ? 'pin-hospital' : 'pin-clinic',
+                html: f.type === 'hospital' ? '🏥' : '🩺',
+                iconSize: [28, 28],
+                iconAnchor: [14, 14]
+            });
+            var m = L.marker([f.lat, f.lng], { icon: icon }).addTo(map);
+            m.bindPopup("<b>" + f.name + "</b>");
+        });
+
+        function focusLocation(lat, lng, name) {
+            map.setView([lat, lng], 15);
+        }
+    </script>
+</body>
+</html>
