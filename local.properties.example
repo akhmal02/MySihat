@@ -1,0 +1,9 @@
+## Location of the Android SDK for your local system
+sdk.dir=C\:\\Users\\YourUsername\\AppData\\Local\\Android\\Sdk
+
+# Supabase Project Credentials (Create your free database at https://supabase.com)
+SUPABASE_URL=https://your-project-id.supabase.co
+SUPABASE_ANON_KEY=your_supabase_anon_key_here
+
+# Google Maps API Key
+MAPS_API_KEY=your_google_maps_api_key_here

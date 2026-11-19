@@ -13,6 +13,7 @@ val localProps = Properties().apply {
 }
 val supabaseUrl: String = localProps.getProperty("SUPABASE_URL", "")
 val supabaseAnonKey: String = localProps.getProperty("SUPABASE_ANON_KEY", "")
+val mapsApiKey: String = localProps.getProperty("MAPS_API_KEY", "")
 
 android {
     namespace = "com.example.mysihat"
@@ -31,6 +32,7 @@ android {
 
         buildConfigField("String", "SUPABASE_URL", "\"$supabaseUrl\"")
         buildConfigField("String", "SUPABASE_ANON_KEY", "\"$supabaseAnonKey\"")
+        manifestPlaceholders["MAPS_API_KEY"] = mapsApiKey
     }
 
     buildTypes {
